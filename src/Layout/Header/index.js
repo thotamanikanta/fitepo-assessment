@@ -1,31 +1,39 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
-import MuiDrawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
+
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
 import {
+  Logout,
   Mail,
   More,
   Notifications,
+  PowerSettingsNew,
+  RestartAlt,
   Search,
   Settings,
 } from "@mui/icons-material";
-import { Avatar, InputAdornment, TextField } from "@mui/material";
+import {
+  Avatar,
+  InputAdornment,
+  Link,
+  TextField,
+  Tooltip,
+} from "@mui/material";
+import CustomPopover from "../../components/CustomPopover";
+
+import fitpeo_logo from "../../assets/images/fitpeo_logo.webp";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router";
 
 const drawerWidth = 240;
 
@@ -49,7 +57,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Header = ({ setOpen, open }) => {
-  const theme = useTheme();
+  const navigate = useNavigate();
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -58,18 +66,36 @@ const Header = ({ setOpen, open }) => {
   return (
     <AppBar position="fixed" open={open}>
       <Toolbar>
+        <Box sx={{ mr: 2, display: open ? "none" : "flex", ml: "-20px" }}>
+          <Link
+            // style={{ position: 'absolute', left: '430px' }}
+            href="https://fitpeo.com/"
+            target="_blank"
+            underline="none"
+            // sx={{ px: "20px", pt: "20px" }}
+          >
+            <img src={fitpeo_logo} width={180} height={46.932} alt="Fitpeo" />
+          </Link>
+        </Box>
         <IconButton
           color="inherit"
           aria-label="open drawer"
           onClick={handleDrawerOpen}
           edge="start"
           sx={{
-            marginRight: 5,
+            ml: "8px",
+            mr: "20px",
+            p: 1,
+            backgroundColor: "#039092",
+            "&:hover": {
+              background: "#039092",
+            },
             ...(open && { display: "none" }),
           }}
         >
           <MenuIcon />
         </IconButton>
+
         <TextField
           type="search"
           sx={{
@@ -84,22 +110,23 @@ const Header = ({ setOpen, open }) => {
             },
             "& .MuiOutlinedInput-root": {
               "& fieldset": {
-                borderColor: "#3c475f", // Default border color
+                borderColor: "#039092", // Default border color
                 borderWidth: "2px",
                 color: "white",
+                borderRadius: "20px",
               },
               "&:hover fieldset": {
-                borderColor: "#3c475f", // Border color on hover
+                borderColor: "#039092", // Border color on hover
               },
               "&.Mui-focused fieldset": {
-                borderColor: "#3c475f", // Border color when focused
+                borderColor: "#039092", // Border color when focused
               },
             },
             "& .MuiInputLabel-root": {
-              color: "#3c475f", // Default label color
+              color: "#039092", // Default label color
             },
             "& .MuiInputLabel-root.Mui-focused": {
-              color: "#3c475f", // Label color when focused
+              color: "#039092", // Label color when focused
             },
           }}
           placeholder="Search"
@@ -117,46 +144,126 @@ const Header = ({ setOpen, open }) => {
           <IconButton
             size="large"
             color="inherit"
-            sx={{ backgroundColor: "#3c475f" }}
+            sx={{
+              backgroundColor: "#039092",
+              p: 1,
+              "&:hover": {
+                color: "#039092",
+                background: "#039092",
+              },
+            }}
           >
             <Mail />
           </IconButton>
           <IconButton
             size="large"
             color="inherit"
-            sx={{ backgroundColor: "#3c475f" }}
+            sx={{
+              backgroundColor: "#039092",
+              p: 1,
+              "&:hover": {
+                background: "#039092",
+              },
+            }}
           >
             <Settings />
           </IconButton>
           <IconButton
             size="large"
-            aria-label="show 17 new notifications"
             color="inherit"
-            sx={{ backgroundColor: "#3c475f" }}
+            sx={{
+              backgroundColor: "#039092",
+              p: 1,
+              "&:hover": {
+                background: "#039092",
+              },
+            }}
           >
             <Notifications />
           </IconButton>
-          <IconButton
-            size="large"
-            color="inherit"
-            sx={{ backgroundColor: "#3c475f" }}
+
+          <CustomPopover
+            triggerButton={
+              <Tooltip title={"Iron Man"} placement="bottom">
+                <Avatar
+                  alt="T"
+                  src="https://mui.com/static/images/avatar/2.jpg"
+                  sx={{ width: "24px", height: "24px" }}
+                />
+              </Tooltip>
+            }
           >
-            <Avatar
-              alt="T"
-              src="https://mui.com/static/images/avatar/2.jpg"
-              sx={{ width: "24px", height: "24px" }}
-            />
-          </IconButton>
+            <nav>
+              <List disablePadding sx={{ p: "0px 16px" }}>
+                <ListItemButton
+                  onClick={() => {
+                    Cookies.remove("loginToken");
+                    navigate("/signin", { replace: true });
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Logout />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" sx={{ my: 0 }} />
+                </ListItemButton>
+                <ListItemButton onClick={() => {}}>
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <PowerSettingsNew />
+                  </ListItemIcon>
+                  <ListItemText primary="Shutdown" sx={{ my: 0 }} />
+                </ListItemButton>
+                <ListItemButton onClick={() => {}}>
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <RestartAlt />
+                  </ListItemIcon>
+                  <ListItemText primary="Reboot" sx={{ my: 0 }} />
+                </ListItemButton>
+              </List>
+            </nav>
+          </CustomPopover>
         </Box>
         <Box></Box>
-        <Box sx={{ display: { xs: "flex", md: "none" } }}>
-          <IconButton
-            size="large"
-            // onClick={handleMobileMenuOpen}
-            color="primary"
-          >
-            <More />
-          </IconButton>
+        <Box sx={{ display: { xs: "flex", md: "none" }, pl: 1 }}>
+          <CustomPopover triggerButton={<More sx={{ color: "white" }} />}>
+            <nav>
+              <List disablePadding sx={{ p: "0px 16px" }}>
+                <ListItemButton
+                  onClick={() => {
+                    Cookies.remove("loginToken");
+                    navigate("/signin", { replace: true });
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Mail />
+                  </ListItemIcon>
+                  <ListItemText primary="Email" sx={{ my: 0 }} />
+                </ListItemButton>
+                <ListItemButton onClick={() => {}}>
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Settings />
+                  </ListItemIcon>
+                  <ListItemText primary="Settings" sx={{ my: 0 }} />
+                </ListItemButton>
+                <ListItemButton onClick={() => {}}>
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Notifications />
+                  </ListItemIcon>
+                  <ListItemText primary="Notification" sx={{ my: 0 }} />
+                </ListItemButton>
+                <ListItemButton
+                  onClick={() => {
+                    Cookies.remove("loginToken");
+                    navigate("/signin", { replace: true });
+                  }}
+                >
+                  <ListItemIcon sx={{ minWidth: 36 }}>
+                    <Logout />
+                  </ListItemIcon>
+                  <ListItemText primary="Logout" sx={{ my: 0 }} />
+                </ListItemButton>
+              </List>
+            </nav>
+          </CustomPopover>
         </Box>
       </Toolbar>
     </AppBar>

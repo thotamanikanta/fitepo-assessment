@@ -7,8 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Avatar, IconButton, Typography } from "@mui/material";
-import { Box } from "@mui/system";
-
 function createData(customerName, orderNo, amount, status) {
   return { customerName, orderNo, amount, status };
 }

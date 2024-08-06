@@ -1,61 +1,19 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
-import CssBaseline from "@mui/material/CssBaseline";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
+
 import List from "@mui/material/List";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
+import menus from "./menu";
+import SidebarNav from "./SidebarNav";
+import { Link } from "@mui/material";
+import fitpeo_logo from "../../assets/images/fitpeo_logo.webp";
+import { MenuOpen } from "@mui/icons-material";
 
 const drawerWidth = 240;
-
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${drawerWidth}px`,
-    ...(open && {
-      transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  })
-);
-
-const AppBar = styled(MuiAppBar, {
-  shouldForwardProp: (prop) => prop !== "open",
-})(({ theme, open }) => ({
-  transition: theme.transitions.create(["margin", "width"], {
-    easing: theme.transitions.easing.sharp,
-    duration: theme.transitions.duration.leavingScreen,
-  }),
-  ...(open && {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: `${drawerWidth}px`,
-    transition: theme.transitions.create(["margin", "width"], {
-      easing: theme.transitions.easing.easeOut,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  }),
-}));
 
 export const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",
@@ -63,16 +21,10 @@ export const DrawerHeader = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 1),
   // necessary for content to be below app bar
   ...theme.mixins.toolbar,
-  justifyContent: "flex-end",
+  // justifyContent: "flex-end",
 }));
 
 const TempSidebar = ({ open, setOpen }) => {
-  const theme = useTheme();
-
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -85,45 +37,54 @@ const TempSidebar = ({ open, setOpen }) => {
         "& .MuiDrawer-paper": {
           width: drawerWidth,
           boxSizing: "border-box",
+
+          borderRight: "none",
         },
       }}
       variant="persistent"
       anchor="left"
       open={open}
     >
-      <DrawerHeader>
-        <IconButton onClick={handleDrawerClose}>
-          {theme.direction === "ltr" ? (
-            <ChevronLeftIcon />
-          ) : (
-            <ChevronRightIcon />
-          )}
+      <DrawerHeader sx={{ background: (theme) => theme.palette.primary.main }}>
+        <Box sx={{ mr: 2, display: open ? "flex" : "none", ml: "-10px" }}>
+          <Link
+            // style={{ position: 'absolute', left: '430px' }}
+            href="https://fitpeo.com/"
+            target="_blank"
+            underline="none"
+            // sx={{ px: "20px", pt: "20px" }}
+          >
+            <img src={fitpeo_logo} width={180} height={46.932} alt="Fitpeo" />
+          </Link>
+        </Box>
+        <IconButton
+          onClick={handleDrawerClose}
+          sx={{
+            color: "#fff",
+            display: open ? "flex" : "none",
+            ml: "4px",
+            p: 1,
+            backgroundColor: "#039092",
+
+            "&:hover": {
+              background: "#039092",
+            },
+          }}
+        >
+          <MenuOpen />
         </IconButton>
       </DrawerHeader>
       <Divider />
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
+      <Box sx={{ background: "#F7F7F7", height: "16px" }} />
+      <List disablePadding sx={{ pb: 2, overflow: "hidden" }}>
+        {menus.map((item, index) => (
+          <SidebarNav
+            key={index}
+            item={item}
+            open={open}
+            setOpen={setOpen}
+            smallDevice={true}
+          />
         ))}
       </List>
     </Drawer>

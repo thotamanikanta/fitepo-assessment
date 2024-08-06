@@ -1,10 +1,4 @@
-import {
-  AdsClick,
-  ArrowLeft,
-  ArrowRight,
-  Dining,
-  Fastfood,
-} from "@mui/icons-material";
+import { ArrowRight, Dining, Fastfood, GpsFixed } from "@mui/icons-material";
 import { CardContent, Grid, IconButton, Typography } from "@mui/material";
 import { Box, styled } from "@mui/system";
 
@@ -36,7 +30,7 @@ const Food = () => {
           <Grid item>
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <StyledIconButton sx={{ p: 1, mr: 1 }}>
-                <AdsClick color="warning" />
+                <GpsFixed color="warning" />
               </StyledIconButton>
               <Typography>Goals</Typography>
             </Box>
@@ -55,9 +49,20 @@ const Food = () => {
         >
           <Grid item>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <StyledIconButton sx={{ p: 1, mr: 1 }}>
-                <Fastfood color="warning" />
-              </StyledIconButton>
+              <IconButton
+                sx={{
+                  p: 1,
+                  mr: 1,
+                  background: (theme) => theme.palette.primary.light,
+
+                  "&:hover": {
+                    color: (theme) => theme.palette.primary.main,
+                    background: (theme) => theme.palette.primary.light,
+                  },
+                }}
+              >
+                <Fastfood color="primary" />
+              </IconButton>
               <Typography>Popular Dishes</Typography>
             </Box>
           </Grid>
@@ -75,9 +80,20 @@ const Food = () => {
         >
           <Grid item>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <StyledIconButton sx={{ p: 1, mr: 1 }}>
-                <Dining color="warning" />
-              </StyledIconButton>
+              <IconButton
+                sx={{
+                  p: 1,
+                  mr: 1,
+                  background: (theme) => theme.palette.neutral.light,
+
+                  "&:hover": {
+                    color: (theme) => theme.palette.neutral.main,
+                    background: (theme) => theme.palette.neutral.light,
+                  },
+                }}
+              >
+                <Dining sx={{ color: (theme) => theme.palette.neutral.main }} />
+              </IconButton>
               <Typography>Menus</Typography>
             </Box>
           </Grid>

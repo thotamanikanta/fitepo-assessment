@@ -1,10 +1,9 @@
-import { alpha } from "@mui/system";
 import React from "react";
 import { Cell, Pie, PieChart, ResponsiveContainer } from "recharts";
 
 const data = [
   { name: "Earning", value: 70, color: "#039092" },
-  { name: "Pending", value: 30, color: alpha("#039092", "0.8") },
+  { name: "Pending", value: 30, color: "#14C9CB" },
 ];
 
 const OrderChart = () => {
@@ -19,8 +18,18 @@ const OrderChart = () => {
           dominantBaseline="middle"
           fill="#000"
         >
-          1800
+          70%
         </text>
+        <br />
+        <text
+          x="50%"
+          fontSize={16}
+          y="50%"
+          textAnchor="middle"
+          dominantBaseline="middle"
+          fill="#000"
+        ></text>
+
         <Pie
           data={data}
           dataKey="value"

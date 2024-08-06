@@ -1,10 +1,8 @@
 import {
   Add,
   ArrowDropUp,
-  ArrowUpward,
   Sell,
   ShoppingBag,
-  ShoppingBasket,
   ShoppingCart,
 } from "@mui/icons-material";
 import {
@@ -17,15 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { alpha, styled } from "@mui/system";
-import {
-  Cell,
-  Label,
-  Legend,
-  Pie,
-  ResponsiveContainer,
-  Tooltip,
-  PieChart,
-} from "recharts";
+
 import OrderChart from "./OrderChart";
 import Activity from "./Activity";
 import Food from "./Food";
@@ -42,18 +32,17 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const COLORS = ["#00C49F", "#FFBB28"];
-
-const data2 = [
-  { name: "A1", value: 70 },
-  { name: "A2", value: 30 },
-];
-
 const Dashboard = () => {
   return (
     <>
-      <h1>Dashboard</h1>
-      <Grid container spacing={3} mt={"20px"}>
+      <Grid container spacing={3}>
+        <Grid item xs={12} spacing={3}>
+          <Card>
+            <CardContent>
+              <Typography variant="h2">Dashboard</Typography>
+            </CardContent>
+          </Card>
+        </Grid>
         <Grid item container spacing={3}>
           <Grid item xs={6} md={4} lg={2} sx={{ display: "flex" }}>
             <Card>
@@ -258,53 +247,6 @@ const Dashboard = () => {
                     </Grid>
                   </Grid>
                   <Grid item xs={6} lg={7}>
-                    {/* <ResponsiveContainer width="100%" height={90}>
-                      <PieChart>
-                        <Pie
-                          data={data2}
-                          cx={"50%"}
-                          cy={"50%"}
-                          innerRadius={36}
-                          outerRadius={44}
-                          startAngle={90}
-                          endAngle={-270}
-                          // fill="#NoirPro,Arial"
-                          // activeIndex={this.state.activeIndex}
-                          labelLine={false}
-                          dataKey="value"
-                          centerData={"70%"}
-                        >
-                          {COLORS.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={entry} />
-                          ))}
-                          <Label
-                            value={"70%"}
-                            position="center"
-                            className="label-top"
-                            style={{
-                              fontSize: "1.5rem",
-                              fontWeight: "450",
-                              color: "#00C49F",
-                            }}
-                            textAnchor="middle"
-                            fill={"#00C49F"}
-                          />
-                        </Pie>
-                        <Tooltip
-                          wrapperStyle={{
-                            fontFamily: "Roboto,Arial",
-                            fontWeight: "400",
-                          }}
-                        />
-                        <Legend
-                          wrapperStyle={{
-                            fontFamily: "Roboto,Arial",
-                            fontWeight: "400",
-                          }}
-                        />
-                      </PieChart>
-                    </ResponsiveContainer>
-                     */}
                     <OrderChart />
                     <Typography sx={{ fontSize: "10px" }}>
                       The values shown here are rounded off

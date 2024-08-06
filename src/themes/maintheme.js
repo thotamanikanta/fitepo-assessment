@@ -49,7 +49,8 @@ export const mainTheme = {
       contrastText: "#FFF",
     },
     neutral: {
-      main: "#fff",
+      main: "#039092",
+      light: alpha("#039092", 0.1),
       contrastText: "#000000de",
     },
     text: {
@@ -113,7 +114,6 @@ export const mainTheme = {
       lineHeight: 1.2,
       fontWeight: 400,
       color: "#37373C",
-      margin: "0 0 .5rem",
     },
     h3: {
       fontSize: "1.25rem",

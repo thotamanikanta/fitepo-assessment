@@ -1,24 +1,16 @@
 import * as React from "react";
-import { styled, useTheme } from "@mui/material/styles";
+import { styled } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
-import MuiAppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
+
 import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+
 import { MenuOpen } from "@mui/icons-material";
+import SidebarNav from "./SidebarNav";
+import menus from "./menu";
+import { Link } from "@mui/material";
+import fitpeo_logo from "../../assets/images/fitpeo_logo.webp";
 
 const drawerWidth = 240;
 
@@ -73,8 +65,6 @@ const Drawer = styled(MuiDrawer, {
 }));
 
 const Sidebar = ({ setOpen, open }) => {
-  const theme = useTheme();
-
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -82,58 +72,39 @@ const Sidebar = ({ setOpen, open }) => {
   return (
     <Drawer variant="permanent" open={open}>
       <DrawerHeader sx={{ background: (theme) => theme.palette.primary.main }}>
-        <IconButton onClick={handleDrawerClose} sx={{ color: "#fff" }}>
+        <Box sx={{ mr: 2, display: open ? "flex" : "none", ml: "-10px" }}>
+          <Link
+            // style={{ position: 'absolute', left: '430px' }}
+            href="https://fitpeo.com/"
+            target="_blank"
+            underline="none"
+            // sx={{ px: "20px", pt: "20px" }}
+          >
+            <img src={fitpeo_logo} width={180} height={46.932} alt="Fitpeo" />
+          </Link>
+        </Box>
+        <IconButton
+          onClick={handleDrawerClose}
+          sx={{
+            color: "#fff",
+            display: open ? "flex" : "none",
+            ml: "4px",
+            p: 1,
+            backgroundColor: "#039092",
+
+            "&:hover": {
+              background: "#039092",
+            },
+          }}
+        >
           <MenuOpen />
         </IconButton>
       </DrawerHeader>
       {/* <Divider /> */}
-      <List>
-        {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["All mail", "Trash", "Spam"].map((text, index) => (
-          <ListItem key={text} disablePadding sx={{ display: "block" }}>
-            <ListItemButton
-              sx={{
-                minHeight: 48,
-                justifyContent: open ? "initial" : "center",
-                px: 2.5,
-              }}
-            >
-              <ListItemIcon
-                sx={{
-                  minWidth: 0,
-                  mr: open ? 3 : "auto",
-                  justifyContent: "center",
-                }}
-              >
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
-            </ListItemButton>
-          </ListItem>
+      <Box sx={{ background: "#F7F7F7", height: "16px" }} />
+      <List disablePadding sx={{ pb: 2, overflow: "hidden" }}>
+        {menus.map((item, index) => (
+          <SidebarNav key={index} item={item} open={open} />
         ))}
       </List>
     </Drawer>
